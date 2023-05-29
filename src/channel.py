@@ -15,7 +15,7 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
+        self.__channel_id = channel_id
 
         channel = Channel.get_service().channels().list(id=channel_id, part='snippet,statistics').execute()
 
@@ -61,6 +61,10 @@ class Channel:
         api_key: str = os.getenv('API_KEY')
         object_get = build('youtube', 'v3', developerKey=api_key)
         return object_get
+
+    @property
+    def channel_id(self):
+        return self.__channel_id
 
     def to_json(self, file_name):
         """Мохраняющий в файл значения атрибутов экземпляра `Channel`"""
